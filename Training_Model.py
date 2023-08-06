@@ -28,12 +28,10 @@ class TrainModel:
             # create separate features and labels
             x, y = preprocessor.separate_label_feature(data, label_col_name='Output')
 
-            # check if missing values are present in the dataset
-            is_null_present = preprocessor.is_null_present(x)
+            # check if missing values are present in the dataset. If true, impute, else don't do anything
+            x = preprocessor.is_null_present(x) ? x = preprocessor.impute_missing_values(x)  : x
 
-            # if missing values are there, replace them appropriately.
-            if is_null_present:
-                x = preprocessor.impute_missing_values(x)  # missing value imputation
+          
 
             cols_to_drop = preprocessor.get_columns_with_zero_std_deviation(x)
 
